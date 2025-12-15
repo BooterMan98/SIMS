@@ -4,5 +4,6 @@ enum Command
   exit,
   add,
   edit,
+  delete,
   view,
 }

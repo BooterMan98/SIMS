@@ -45,4 +45,15 @@ class Inventory {
     }
     return true;
   }
+
+  public bool Delete(CommandArgs commandArgs)
+  {
+    if (commandArgs.ArgumentsMissing.HasFlag(MissingArgs.name)) return false;
+
+    var elementToDeleteIndex = Products.FindIndex(product => product.Name == commandArgs.Name);
+    if (elementToDeleteIndex == -1) return false;
+
+    Products.RemoveAt(elementToDeleteIndex);
+    return true;
+  }
 }
