@@ -10,7 +10,10 @@ readonly struct CommandArgs
     Action = GetCommandFromString(commandStrArgs[0]);
 
     var argsCount = commandStrArgs.Count();
-    var missingArgs = MissingArgs.name | MissingArgs.price | MissingArgs.quantity;
+    var missingArgs = MissingArgs.name 
+    | MissingArgs.price 
+    | MissingArgs.quantity 
+    | MissingArgs.newName;
 
     if (argsCount >= 2)
     {
@@ -33,6 +36,12 @@ readonly struct CommandArgs
         Quantity = potentialQuantity;
         missingArgs ^= MissingArgs.quantity;
       }
+    }
+    if (argsCount >= 5)
+    {
+      string potentialNewName = commandStrArgs[4];
+      NewName = potentialNewName;
+      missingArgs ^= MissingArgs.newName;
     }
 
 
@@ -57,6 +66,7 @@ readonly struct CommandArgs
   public required string? Name { get; init; }
   public required int? Price { get; init; }
   public required int? Quantity { get; init; }
+  public string? NewName { get; init; }
   public MissingArgs ArgumentsMissing { get; init; }
 
 
@@ -66,6 +76,7 @@ readonly struct CommandArgs
 
     if (lowerCaseCommand == "add") return Command.add;
     if (lowerCaseCommand == "view") return Command.view;
+    if (lowerCaseCommand == "edit") return Command.edit;
     if (lowerCaseCommand == "exit") return Command.exit;
     return Command.unknown;
     

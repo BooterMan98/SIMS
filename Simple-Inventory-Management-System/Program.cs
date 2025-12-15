@@ -26,6 +26,7 @@ string askforCommandString()
     Console.WriteLine("""
     Enter one of the following commands to do something with the IMS:
     add <Name> <Price> <Quantity> - Add a product to the invetory.
+    edit <name> <Price> <Quantity> <newName> - Edit an already existing product on the inventory
     view - Display all products information on a list. 
     exit - Exit the program (you can also press ctrl-c).
     """);
@@ -51,6 +52,11 @@ void executeCommand(CommandArgs commandArgs)
     case Command.view:
       {
         ViewInventory();
+        break;
+      }
+    case Command.edit:
+      {
+        editProduct(commandArgs);
         break;
       }
     case Command.exit:
@@ -112,6 +118,16 @@ void addProduct(CommandArgs commandArgs)
   }
   product = new Product(name, price, quantity);
   inventory.Add(product);
+}
+
+void editProduct(CommandArgs commandArgs)
+{
+  if (commandArgs.ArgumentsMissing.HasFlag(MissingArgs.name)) return;
+
+  if (inventory.IsProductAvailable(commandArgs.Name!))
+  {
+    inventory.Edit(commandArgs);
+  }
 }
 
 void ViewInventory()
