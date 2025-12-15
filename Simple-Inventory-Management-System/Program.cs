@@ -26,6 +26,7 @@ string askforCommandString()
     Console.WriteLine("""
     Enter one of the following commands to do something with the IMS:
     add <Name> <Price> <Quantity> - Add a product to the invetory.
+    view - Display all products information on a list. 
     exit - Exit the program (you can also press ctrl-c).
     """);
 
@@ -47,6 +48,11 @@ void executeCommand(CommandArgs commandArgs)
        addProduct(commandArgs);
        break;
     }
+    case Command.view:
+      {
+        ViewInventory();
+        break;
+      }
     case Command.exit:
       {
         System.Environment.Exit(0);
@@ -106,4 +112,20 @@ void addProduct(CommandArgs commandArgs)
   }
   product = new Product(name, price, quantity);
   inventory.Add(product);
+}
+
+void ViewInventory()
+{
+  string headerRow = string.Format("{0,-50}|{1,15}|{2,10}", "Name", "Price", "Quantity");
+  string productRowTemplate = "{0,-50}|{1,15:C}|{2,10}";
+  Console.WriteLine(headerRow);
+  Console.WriteLine("---");
+
+  foreach (var product in inventory.Products)
+  {
+    string productRowMessage = string.Format(productRowTemplate, product.Name, product.Price, product.Quantity);
+    Console.WriteLine(productRowMessage);
+  }
+    Console.WriteLine("---");
+
 }

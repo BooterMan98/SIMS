@@ -7,7 +7,7 @@ class Inventory {
   {
 
   } 
-  List<Product> Products { get; } = [];
+  public List<Product> Products { get; } = [];
   public void Add(Product product) {
     Products.Add(product);
   }

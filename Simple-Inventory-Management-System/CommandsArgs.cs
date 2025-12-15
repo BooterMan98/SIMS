@@ -65,6 +65,7 @@ readonly struct CommandArgs
     string lowerCaseCommand = commandStr.ToLower();
 
     if (lowerCaseCommand == "add") return Command.add;
+    if (lowerCaseCommand == "view") return Command.view;
     if (lowerCaseCommand == "exit") return Command.exit;
     return Command.unknown;
     
