@@ -5,5 +5,6 @@ enum Command
   add,
   edit,
   delete,
+  find,
   view,
 }

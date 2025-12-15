@@ -1,5 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using System.Diagnostics.CodeAnalysis;
+using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using Microsoft.VisualBasic;
@@ -63,6 +64,11 @@ void executeCommand(CommandArgs commandArgs)
     case Command.delete:
       {
         deleteProduct(commandArgs);
+        break;
+      }
+      case Command.find:
+      {
+        findProduct(commandArgs);
         break;
       }
     case Command.exit:
@@ -144,6 +150,25 @@ void deleteProduct(CommandArgs commandArgs)
   {
     inventory.Delete(commandArgs);
   }
+
+}
+
+void findProduct(CommandArgs commandArgs)
+{
+  var product = inventory.GetProduct(commandArgs);
+
+  if (product == null)
+  {
+    Console.WriteLine("Product not found.");
+    Console.WriteLine("---");
+    return;
+  }
+
+  string productRowTemplate = "{0,-50}|{1,15:C}|{2,10}";
+  string productRowMessage = string.Format(productRowTemplate, product.Name, product.Price, product.Quantity);
+  Console.WriteLine("---");
+  Console.WriteLine(productRowMessage);
+  Console.WriteLine("---");
 
 }
 

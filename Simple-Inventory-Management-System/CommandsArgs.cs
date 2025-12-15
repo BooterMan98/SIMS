@@ -78,6 +78,7 @@ readonly struct CommandArgs
     if (lowerCaseCommand == "view") return Command.view;
     if (lowerCaseCommand == "edit") return Command.edit;
     if (lowerCaseCommand == "delete") return Command.delete;
+    if (lowerCaseCommand == "find") return Command.find;
     if (lowerCaseCommand == "exit") return Command.exit;
     return Command.unknown;
     

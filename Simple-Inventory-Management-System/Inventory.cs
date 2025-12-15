@@ -56,4 +56,13 @@ class Inventory {
     Products.RemoveAt(elementToDeleteIndex);
     return true;
   }
+
+  public Product? GetProduct(CommandArgs commandArgs)
+  {
+    if (commandArgs.ArgumentsMissing.HasFlag(MissingArgs.name)) return null;
+
+    if (!IsProductAvailable(commandArgs.Name!)) return null;
+
+    return Products.Find(product => product.Name == commandArgs.Name!);
+  }
 }
