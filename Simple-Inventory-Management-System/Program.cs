@@ -130,15 +130,24 @@ void addProduct(CommandArgs commandArgs)
   }
   product = new Product(name, price, quantity);
   inventory.Add(product);
+  Console.WriteLine("PThe product has been added to the invetory");
 }
 
 void editProduct(CommandArgs commandArgs)
 {
   if (commandArgs.ArgumentsMissing.HasFlag(MissingArgs.name)) return;
 
-  if (inventory.IsProductAvailable(commandArgs.Name!))
+  if(!inventory.IsProductAvailable(commandArgs.Name!)) {
+    Console.WriteLine("Product not found, maybe it was already deleted");
+    return;
+  };
+  bool productModified = inventory.Edit(commandArgs);
+  if (productModified)
   {
-    inventory.Edit(commandArgs);
+    Console.WriteLine("Product modified");
+  } else
+  {
+    Console.WriteLine("For some reason, the product has not been modified");
   }
 }
 
@@ -146,9 +155,18 @@ void deleteProduct(CommandArgs commandArgs)
 {
   if (commandArgs.ArgumentsMissing.HasFlag(MissingArgs.name)) return;
 
-  if(inventory.IsProductAvailable(commandArgs.Name!))
+  if(!inventory.IsProductAvailable(commandArgs.Name!)) {
+    Console.WriteLine("Product not found, maybe it was already deleted");
+    return;
+  };
+  
+  bool productDeleted =  inventory.Delete(commandArgs);
+  if (productDeleted)
   {
-    inventory.Delete(commandArgs);
+    Console.WriteLine($"The product {commandArgs.Name} has been deleted");
+  } else
+  {
+    Console.WriteLine("For some reason, the product couldn't be deleted.");
   }
 
 }
