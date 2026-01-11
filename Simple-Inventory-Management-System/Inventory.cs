@@ -9,15 +9,17 @@ class Inventory {
   {
 
   } 
-  public List<Product> Products { get; } = [];
+
+  private readonly List<Product> products = [];
+  public Product[] Products => [.. products];
   public void Add(Product product) {
-    Products.Add(product);
+    products.Add(product);
   }
 
   public bool IsProductAvailable(string name)
   {
     Predicate<Product> hasSameName = product => { return product.Name == name; };
-    var productIndex =  Products.FindIndex(hasSameName);
+    var productIndex =  products.FindIndex(hasSameName);
     return (productIndex == -1) ? false : true;
   }
 
@@ -25,7 +27,7 @@ class Inventory {
   {
     if (commandArgs.ArgumentsMissing.HasFlag(MissingArgs.Name)) return false;
 
-    var productToEdit = Products.Find(product => product.Name == commandArgs.Name);
+    var productToEdit = products.Find(product => product.Name == commandArgs.Name);
 
     var noArgsToEdit = MissingArgs.NewName | MissingArgs.Price | MissingArgs.Quantity;
     if (commandArgs.ArgumentsMissing == noArgsToEdit | productToEdit == null) return false;
@@ -50,10 +52,10 @@ class Inventory {
   {
     if (commandArgs.ArgumentsMissing.HasFlag(MissingArgs.Name)) return false;
 
-    var elementToDeleteIndex = Products.FindIndex(product => product.Name == commandArgs.Name);
+    var elementToDeleteIndex = products.FindIndex(product => product.Name == commandArgs.Name);
     if (elementToDeleteIndex == -1) return false;
 
-    Products.RemoveAt(elementToDeleteIndex);
+    products.RemoveAt(elementToDeleteIndex);
     return true;
   }
 
@@ -63,6 +65,6 @@ class Inventory {
 
     if (!IsProductAvailable(commandArgs.Name!)) return null;
 
-    return Products.Find(product => product.Name == commandArgs.Name!);
+    return products.Find(product => product.Name == commandArgs.Name!);
   }
 }
