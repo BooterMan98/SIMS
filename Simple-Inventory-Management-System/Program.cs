@@ -84,6 +84,7 @@ void executeCommand(CommandArgs commandArgs)
 // If there is an argument missing, it asks for it
 void addProduct(CommandArgs commandArgs)
 {
+  if (commandArgs.Action != Command.Add || commandArgs.IsInvalid) return;
   Product product;
   if ( commandArgs.ArgumentsMissing == MissingArgs.None)
   {
@@ -135,13 +136,13 @@ void addProduct(CommandArgs commandArgs)
 
 void editProduct(CommandArgs commandArgs)
 {
-  if (commandArgs.ArgumentsMissing.HasFlag(MissingArgs.Name)) return;
+  if (commandArgs.Action != Command.Edit || commandArgs.IsInvalid) return;
 
   if(!inventory.IsProductAvailable(commandArgs.Name!)) {
     Console.WriteLine("Product not found, maybe it was already deleted");
     return;
   };
-  bool productModified = inventory.Edit(commandArgs);
+  bool productModified = inventory.Edit(commandArgs.Name!, commandArgs.Price, commandArgs.Quantity, commandArgs.NewName);
   if (productModified)
   {
     Console.WriteLine("Product modified");
@@ -153,14 +154,14 @@ void editProduct(CommandArgs commandArgs)
 
 void deleteProduct(CommandArgs commandArgs)
 {
-  if (commandArgs.ArgumentsMissing.HasFlag(MissingArgs.Name)) return;
+  if (commandArgs.Action != Command.Delete || commandArgs.IsInvalid) return;
 
   if(!inventory.IsProductAvailable(commandArgs.Name!)) {
     Console.WriteLine("Product not found, maybe it was already deleted");
     return;
   };
   
-  bool productDeleted =  inventory.Delete(commandArgs);
+  bool productDeleted =  inventory.Delete(commandArgs.Name!);
   if (productDeleted)
   {
     Console.WriteLine($"The product {commandArgs.Name} has been deleted");
@@ -173,7 +174,9 @@ void deleteProduct(CommandArgs commandArgs)
 
 void findProduct(CommandArgs commandArgs)
 {
-  var product = inventory.GetProduct(commandArgs);
+  if (commandArgs.Action != Command.Find && commandArgs.IsInvalid) return;
+
+  var product = inventory.GetProduct(commandArgs.Name!);
 
   if (product == null)
   {

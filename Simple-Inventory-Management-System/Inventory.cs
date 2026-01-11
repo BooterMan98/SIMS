@@ -23,48 +23,43 @@ class Inventory {
     return (productIndex == -1) ? false : true;
   }
 
-  public bool Edit(CommandArgs commandArgs)
+  public bool Edit(string name, int? price, int? quantity, string? newName)
   {
-    if (commandArgs.ArgumentsMissing.HasFlag(MissingArgs.Name)) return false;
+    var productToEdit = GetProduct(name);
 
-    var productToEdit = products.Find(product => product.Name == commandArgs.Name);
-
-    var noArgsToEdit = MissingArgs.NewName | MissingArgs.Price | MissingArgs.Quantity;
-    if (commandArgs.ArgumentsMissing == noArgsToEdit | productToEdit == null) return false;
+    if (productToEdit is null) return false;
     
-    if (!commandArgs.ArgumentsMissing.HasFlag(MissingArgs.NewName))
+    if (price.HasValue)
     {
-      productToEdit!.Name = commandArgs.NewName!;
+      productToEdit.Price = (int)price;
     }
 
-    if (!commandArgs.ArgumentsMissing.HasFlag(MissingArgs.Price))
+    if (quantity.HasValue)
     {
-      productToEdit!.Price = (int)commandArgs.Price!;
+      productToEdit.Quantity = (int)quantity;
     }
-    if (!commandArgs.ArgumentsMissing.HasFlag(MissingArgs.Quantity))
+    
+    if (!string.IsNullOrWhiteSpace(newName))
     {
-      productToEdit!.Quantity = (int)commandArgs.Quantity!;
+      productToEdit.Name = newName;
     }
+
     return true;
   }
 
-  public bool Delete(CommandArgs commandArgs)
+  public bool Delete(string name)
   {
-    if (commandArgs.ArgumentsMissing.HasFlag(MissingArgs.Name)) return false;
-
-    var elementToDeleteIndex = products.FindIndex(product => product.Name == commandArgs.Name);
+    var elementToDeleteIndex = products.FindIndex(product => product.Name == name);
     if (elementToDeleteIndex == -1) return false;
 
     products.RemoveAt(elementToDeleteIndex);
     return true;
   }
 
-  public Product? GetProduct(CommandArgs commandArgs)
+  public Product? GetProduct(string name)
   {
-    if (commandArgs.ArgumentsMissing.HasFlag(MissingArgs.Name)) return null;
+    if (!IsProductAvailable(name)) return null;
 
-    if (!IsProductAvailable(commandArgs.Name!)) return null;
-
-    return products.Find(product => product.Name == commandArgs.Name!);
+    return products.Find(product => product.Name == name);
   }
 }

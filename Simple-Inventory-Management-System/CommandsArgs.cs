@@ -30,6 +30,20 @@ readonly struct CommandArgs
   /// </summary>
   public MissingArgs ArgumentsMissing { get; init; }
 
+  public bool IsInvalid => Action switch
+  {
+    Command.Unknown => true,
+    Command.Exit => false,
+    Command.Add => !ArgumentsMissing.HasFlag(MissingArgs.NewName),
+    Command.Edit => ArgumentsMissing.HasFlag(MissingArgs.Name) && (ArgumentsMissing & (ArgumentsMissing - 1)) == 0,
+    Command.Delete => ArgumentsMissing.HasFlag(MissingArgs.Name),
+    Command.Find => ArgumentsMissing.HasFlag(MissingArgs.Name),
+    Command.View => true,
+  };
+
+
+
+
   private static string? GetStringFromArgs(string[] strArgs, MissingArgs argToFind,MissingArgs missingArgs)
   {
     if (missingArgs.HasFlag(argToFind))
