@@ -48,11 +48,11 @@ readonly struct CommandArgs
     ArgumentsMissing = missingArgs;
 
     switch (Action) {
-      case Command.add:
+      case Command.Add:
         {
           break;
         }
-      case Command.exit or Command.unknown: 
+      case Command.Exit or Command.Unknown: 
         {
           break;
         }
@@ -74,13 +74,13 @@ readonly struct CommandArgs
   {
     string lowerCaseCommand = commandStr.ToLower();
 
-    if (lowerCaseCommand == "add") return Command.add;
-    if (lowerCaseCommand == "view") return Command.view;
-    if (lowerCaseCommand == "edit") return Command.edit;
-    if (lowerCaseCommand == "delete") return Command.delete;
-    if (lowerCaseCommand == "find") return Command.find;
-    if (lowerCaseCommand == "exit") return Command.exit;
-    return Command.unknown;
+    if (lowerCaseCommand == "add") return Command.Add;
+    if (lowerCaseCommand == "view") return Command.View;
+    if (lowerCaseCommand == "edit") return Command.Edit;
+    if (lowerCaseCommand == "delete") return Command.Delete;
+    if (lowerCaseCommand == "find") return Command.Find;
+    if (lowerCaseCommand == "exit") return Command.Exit;
+    return Command.Unknown;
     
 
   }

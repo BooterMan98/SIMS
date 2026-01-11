@@ -1,10 +1,10 @@
 enum Command
 {
-  unknown,
-  exit,
-  add,
-  edit,
-  delete,
-  find,
-  view,
+  Unknown,
+  Exit,
+  Add,
+  Edit,
+  Delete,
+  Find,
+  View,
 }

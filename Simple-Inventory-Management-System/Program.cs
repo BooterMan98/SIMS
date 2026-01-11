@@ -46,32 +46,32 @@ string askforCommandString()
 void executeCommand(CommandArgs commandArgs)
 {
  switch (commandArgs.Action) {
-    case Command.add:
+    case Command.Add:
     {
        addProduct(commandArgs);
        break;
     }
-    case Command.view:
+    case Command.View:
       {
         ViewInventory();
         break;
       }
-    case Command.edit:
+    case Command.Edit:
       {
         editProduct(commandArgs);
         break;
       }
-    case Command.delete:
+    case Command.Delete:
       {
         deleteProduct(commandArgs);
         break;
       }
-      case Command.find:
+      case Command.Find:
       {
         findProduct(commandArgs);
         break;
       }
-    case Command.exit:
+    case Command.Exit:
       {
         System.Environment.Exit(0);
         break;
@@ -85,7 +85,7 @@ void executeCommand(CommandArgs commandArgs)
 void addProduct(CommandArgs commandArgs)
 {
   Product product;
-  if ( commandArgs.ArgumentsMissing == MissingArgs.none)
+  if ( commandArgs.ArgumentsMissing == MissingArgs.None)
   {
     product = new Product(commandArgs.Name!, (int)commandArgs.Price!, (int)commandArgs.Quantity!);
     inventory.Add(product);
@@ -96,7 +96,7 @@ void addProduct(CommandArgs commandArgs)
   int price;
   int quantity;
   string? input;
-  if (commandArgs.ArgumentsMissing.HasFlag(MissingArgs.name))
+  if (commandArgs.ArgumentsMissing.HasFlag(MissingArgs.Name))
   {
     do {
       Console.WriteLine("Enter Name:");
@@ -107,7 +107,7 @@ void addProduct(CommandArgs commandArgs)
   {
     name = commandArgs.Name!;
   }
-  if (commandArgs.ArgumentsMissing.HasFlag(MissingArgs.price))
+  if (commandArgs.ArgumentsMissing.HasFlag(MissingArgs.Price))
   {
     do {
       Console.WriteLine("Enter price:");
@@ -117,7 +117,7 @@ void addProduct(CommandArgs commandArgs)
   {
     price = (int)commandArgs.Price!;
   }
-  if (commandArgs.ArgumentsMissing.HasFlag(MissingArgs.quantity))
+  if (commandArgs.ArgumentsMissing.HasFlag(MissingArgs.Quantity))
   {
     do 
     {
@@ -135,7 +135,7 @@ void addProduct(CommandArgs commandArgs)
 
 void editProduct(CommandArgs commandArgs)
 {
-  if (commandArgs.ArgumentsMissing.HasFlag(MissingArgs.name)) return;
+  if (commandArgs.ArgumentsMissing.HasFlag(MissingArgs.Name)) return;
 
   if(!inventory.IsProductAvailable(commandArgs.Name!)) {
     Console.WriteLine("Product not found, maybe it was already deleted");
@@ -153,7 +153,7 @@ void editProduct(CommandArgs commandArgs)
 
 void deleteProduct(CommandArgs commandArgs)
 {
-  if (commandArgs.ArgumentsMissing.HasFlag(MissingArgs.name)) return;
+  if (commandArgs.ArgumentsMissing.HasFlag(MissingArgs.Name)) return;
 
   if(!inventory.IsProductAvailable(commandArgs.Name!)) {
     Console.WriteLine("Product not found, maybe it was already deleted");

@@ -1,9 +1,9 @@
 [Flags]
   enum MissingArgs
   {
-    none    = 0b_0000,
-    name    = 0b_0001,
-    price   = 0b_0010,
-    quantity= 0b_0100,
-    newName = 0b_1000,
+    None    = 0b_0000,
+    Name    = 0b_0001,
+    Price   = 0b_0010,
+    Quantity= 0b_0100,
+    NewName = 0b_1000,
   }

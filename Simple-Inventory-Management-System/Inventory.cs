@@ -23,23 +23,23 @@ class Inventory {
 
   public bool Edit(CommandArgs commandArgs)
   {
-    if (commandArgs.ArgumentsMissing.HasFlag(MissingArgs.name)) return false;
+    if (commandArgs.ArgumentsMissing.HasFlag(MissingArgs.Name)) return false;
 
     var productToEdit = Products.Find(product => product.Name == commandArgs.Name);
 
-    var noArgsToEdit = MissingArgs.newName | MissingArgs.price | MissingArgs.quantity;
+    var noArgsToEdit = MissingArgs.NewName | MissingArgs.Price | MissingArgs.Quantity;
     if (commandArgs.ArgumentsMissing == noArgsToEdit | productToEdit == null) return false;
     
-    if (!commandArgs.ArgumentsMissing.HasFlag(MissingArgs.newName))
+    if (!commandArgs.ArgumentsMissing.HasFlag(MissingArgs.NewName))
     {
       productToEdit!.Name = commandArgs.NewName!;
     }
 
-    if (!commandArgs.ArgumentsMissing.HasFlag(MissingArgs.price))
+    if (!commandArgs.ArgumentsMissing.HasFlag(MissingArgs.Price))
     {
       productToEdit!.Price = (int)commandArgs.Price!;
     }
-    if (!commandArgs.ArgumentsMissing.HasFlag(MissingArgs.quantity))
+    if (!commandArgs.ArgumentsMissing.HasFlag(MissingArgs.Quantity))
     {
       productToEdit!.Quantity = (int)commandArgs.Quantity!;
     }
@@ -48,7 +48,7 @@ class Inventory {
 
   public bool Delete(CommandArgs commandArgs)
   {
-    if (commandArgs.ArgumentsMissing.HasFlag(MissingArgs.name)) return false;
+    if (commandArgs.ArgumentsMissing.HasFlag(MissingArgs.Name)) return false;
 
     var elementToDeleteIndex = Products.FindIndex(product => product.Name == commandArgs.Name);
     if (elementToDeleteIndex == -1) return false;
@@ -59,7 +59,7 @@ class Inventory {
 
   public Product? GetProduct(CommandArgs commandArgs)
   {
-    if (commandArgs.ArgumentsMissing.HasFlag(MissingArgs.name)) return null;
+    if (commandArgs.ArgumentsMissing.HasFlag(MissingArgs.Name)) return null;
 
     if (!IsProductAvailable(commandArgs.Name!)) return null;
 
