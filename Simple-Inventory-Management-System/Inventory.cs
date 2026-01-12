@@ -18,9 +18,10 @@ class Inventory {
 
   public bool IsProductAvailable(string name)
   {
-    Predicate<Product> hasSameName = product => { return product.Name == name; };
-    var productIndex =  products.FindIndex(hasSameName);
-    return (productIndex == -1) ? false : true;
+    public bool IsProductAvailable(string name)
+{
+    return Products.Any(p => p.Name == name);
+}
   }
 
   public bool Edit(string name, int? price, int? quantity, string? newName)
