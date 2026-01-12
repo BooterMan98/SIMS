@@ -12,13 +12,13 @@ Console.Title = "Simple Inventory Managment System";
 
 while (true)
 {
-  var line = askforCommandString();
+  var line = AskForCommandString();
   var lineArgs = new CommandArgs(line);
-  executeCommand(lineArgs);
+  ExecuteCommand(lineArgs);
 }
 
 
-string askforCommandString() 
+string AskForCommandString() 
 {
   string? commandStr = null;
 
@@ -43,12 +43,12 @@ string askforCommandString()
   return commandStr!;
 }
 
-void executeCommand(CommandArgs commandArgs)
+void ExecuteCommand(CommandArgs commandArgs)
 {
  switch (commandArgs.Action) {
     case Command.Add:
     {
-       addProduct(commandArgs);
+       AddProduct(commandArgs);
        break;
     }
     case Command.View:
@@ -58,17 +58,17 @@ void executeCommand(CommandArgs commandArgs)
       }
     case Command.Edit:
       {
-        editProduct(commandArgs);
+        EditProduct(commandArgs);
         break;
       }
     case Command.Delete:
       {
-        deleteProduct(commandArgs);
+        DeleteProduct(commandArgs);
         break;
       }
       case Command.Find:
       {
-        findProduct(commandArgs);
+        FindProduct(commandArgs);
         break;
       }
     case Command.Exit:
@@ -82,7 +82,7 @@ void executeCommand(CommandArgs commandArgs)
 
 // It creates a product from the command arguments to add to the inventory.
 // If there is an argument missing, it asks for it
-void addProduct(CommandArgs commandArgs)
+void AddProduct(CommandArgs commandArgs)
 {
   if (commandArgs.Action != Command.Add || commandArgs.IsInvalid) return;
   Product product;
@@ -134,7 +134,7 @@ void addProduct(CommandArgs commandArgs)
   Console.WriteLine("PThe product has been added to the invetory");
 }
 
-void editProduct(CommandArgs commandArgs)
+void EditProduct(CommandArgs commandArgs)
 {
   if (commandArgs.Action != Command.Edit || commandArgs.IsInvalid) return;
 
@@ -152,7 +152,7 @@ void editProduct(CommandArgs commandArgs)
   }
 }
 
-void deleteProduct(CommandArgs commandArgs)
+void DeleteProduct(CommandArgs commandArgs)
 {
   if (commandArgs.Action != Command.Delete || commandArgs.IsInvalid) return;
 
@@ -172,7 +172,7 @@ void deleteProduct(CommandArgs commandArgs)
 
 }
 
-void findProduct(CommandArgs commandArgs)
+void FindProduct(CommandArgs commandArgs)
 {
   if (commandArgs.Action != Command.Find && commandArgs.IsInvalid) return;
 
